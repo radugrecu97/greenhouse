@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Automation Web Server with BeagleBone</title>
+</head>
+<h2>Monitoring</h2>
+<p id="humidity">
+</p>
+
+
+<h2>Controllers</h2>
+
+<p id="output_override">Manual Override</p>
+<button type="button" onclick="change_override(1);">ON</button>
+<button type="button" onclick="change_override(0);">OFF</button>
+<br><br>
+
+<p id="output_heater">Heater</p>
+<button type="button" onclick="change_heater(1);">ON</button>
+<button type="button" onclick="change_heater(0);">OFF</button>
+<br><br>
+
+<p id="output_tray">Tray</p>
+<button type="button" onclick="change_tray(1);">OPEN</button>
+<button type="button" onclick="change_tray(0);">CLOSE</button>
+<br><br>
+
+<p id="output_LED">LEDs</p>
+<form id="led_intensity">
+    <p>LED intensity:</p>
+    <input type="text" name="intensity" id="led_intensity_value"><br>
+    <input type="submit" value="Submit">
+</form>
+</div>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    // Establishing connection with server
+    var socket = io.connect();
+
+    function change_override(state) {
+        if (state == 1) {
+            // Emit message changing the state to 1
+            socket.emit('change_override', '{"state":1}');
+            // Change led status on web page to ON
+            document.getElementById("output_override").innerHTML = "Manual Override: ON";
+        } else if (state == 0) {
+            // Emit message changing the state to 0
+            socket.emit('change_override', '{"state":0}');
+            // Change led status on web page to OFF
+            document.getElementById("output_override").innerHTML = "Manual Override: OFF";
+        }
+    }
+
+    // Changes the heater state
+    function change_heater(state) {
+        if (state == 1) {
+            // Emit message changing the state to 1
+            socket.emit('change_heater', '{"state":1}');
+            // Change led status on web page to ON
+            document.getElementById("output_heater").innerHTML = "Heater: ON";
+        } else if (state == 0) {
+            // Emit message changing the state to 0
+            socket.emit('change_heater', '{"state":0}');
+            // Change led status on web page to OFF
+            document.getElementById("output_heater").innerHTML = "Heater: OFF";
+        }
+    }
+
+    // Changes tray state
+    function change_tray(state) {
+        if (state == 1) {
+            // Emit message changing the state to 1
+            socket.emit('change_tray', '{"state":1}');
+            // Change led status on web page to ON
+            document.getElementById("output_tray").innerHTML = "Tray: OPEN";
+        } else if (state == 0) {
+            // Emit message changing the state to 0
+            socket.emit('tray_tray', '{"state":0}');
+            // Change led status on web page to OFF
+            document.getElementById("output_tray").innerHTML = "Tray: CLOSED";
+        }
+    }
+
+    socket.on("humidity", (msg) => {
+        document.getElementById("humidity").innerHTML = `${msg}`;
+    });
+
+    document.getElementById("led_intensity").addEventListener("submit", function (event) {
+        event.preventDefault();
+        let led_intensity = document.getElementById("led_intensity_value").value;
+        socket.emit('led_intensity', `{"value":${led_intensity}}`);
+    });
+</script>
+</html>

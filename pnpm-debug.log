@@ -1,0 +1,24 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1,
+    "workspacePrefix": null
+  },
+  "1 debug pnpm": {
+    "isCaseSensitive": true,
+    "store": "/home/debian/.pnpm-store/2"
+  },
+  "2 error pnpm": {
+    "message": {
+      "code": "ERR_PNPM_UNEXPECTED_STORE",
+      "expectedStorePath": "/root/.pnpm-store/2",
+      "actualStorePath": "/home/debian/.pnpm-store/2",
+      "modulesDir": "/home/debian/node_modules"
+    },
+    "err": {
+      "name": "Error",
+      "message": "Unexpected store location",
+      "code": "ERR_PNPM_UNEXPECTED_STORE",
+      "stack": "Error: Unexpected store location\n    at Object.checkCompatibility [as default] (/usr/local/lib/node_modules/pnpm/lib/node_modules/supi/lib/getContext/checkCompatibility/index.js:14:15)\n    at Promise.all.importers.map (/usr/local/lib/node_modules/pnpm/lib/node_modules/supi/lib/getContext/index.js:137:41)\n    at Array.map (<anonymous>)\n    at validateNodeModules (/usr/local/lib/node_modules/pnpm/lib/node_modules/supi/lib/getContext/index.js:135:33)\n    at Object.getContext [as default] (/usr/local/lib/node_modules/pnpm/lib/node_modules/supi/lib/getContext/index.js:20:15)\n    at process._tickCallback (internal/process/next_tick.js:68:7)"
+    }
+  }
+}
